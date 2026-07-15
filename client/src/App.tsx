@@ -7,20 +7,24 @@ import CricketFactCard from "./components/CricketFactCard";
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen bg-[#0B1120] text-white">
       <Header />
+
       <UserInfo
-  username="Megh"
-  coins={5000}
-  xp={1200}
-  level={8}
-/>
+        username="Megh"
+        coins={5000}
+        xp={1200}
+        level={8}
+      />
+
       <PlayButton />
+
       <NavigationMenu />
+
       <DailyRewardCard />
+
       <CricketFactCard />
-      
-    </>
+    </div>
   );
 }
 

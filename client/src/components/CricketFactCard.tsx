@@ -1,17 +1,21 @@
-import Card from "./ui/Card";
+import GlassCard from "./GlassCard";
 
 function CricketFactCard() {
   return (
-    <Card className="mt-8 mb-10">
-      <h2 className="text-2xl font-bold">
-        Cricket Fact of the Day
-      </h2>
+    <GlassCard>
+      <h3 className="text-2xl font-bold text-white">
+        Cricket Fact
+      </h3>
 
-      <p className="mt-4 leading-relaxed text-gray-300">
-        Sachin Tendulkar is the only player in international cricket
-        to score 100 international centuries across Tests and ODIs.
+      <p className="mt-5 leading-7 text-slate-300">
+        Sachin Tendulkar is the only player in cricket history to
+        score 100 international centuries.
       </p>
-    </Card>
+
+      <p className="mt-8 text-sm text-yellow-400">
+        New fact every day
+      </p>
+    </GlassCard>
   );
 }
 

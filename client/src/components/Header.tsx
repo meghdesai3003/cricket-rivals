@@ -3,6 +3,7 @@ import logo from "../assets/logo-placeholder.svg";
 function Header() {
   return (
     <header className="mx-auto flex w-11/12 max-w-6xl items-center justify-between py-6">
+      {/* Left Side */}
       <div className="flex items-center gap-4">
         <img
           src={logo}
@@ -21,14 +22,22 @@ function Header() {
         </div>
       </div>
 
-      <div className="text-right">
-        <p className="text-sm text-gray-400">
-          Version
-        </p>
+      {/* Right Side */}
+      <div className="flex items-center gap-8">
+        <div className="text-right">
+          <p className="text-xs text-gray-400">Coins</p>
+          <p className="text-lg font-bold text-yellow-400">5000</p>
+        </div>
 
-        <p className="font-semibold">
-          v0.1
-        </p>
+        <div className="text-right">
+          <p className="text-xs text-gray-400">Level</p>
+          <p className="text-lg font-bold text-green-400">8</p>
+        </div>
+
+        <div className="text-right">
+          <p className="text-xs text-gray-400">Player</p>
+          <p className="text-lg font-semibold">Megh</p>
+        </div>
       </div>
     </header>
   );

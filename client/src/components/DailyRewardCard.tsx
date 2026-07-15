@@ -1,24 +1,34 @@
-import Card from "./ui/Card";
-import Button from "./ui/Button";
+import GlassCard from "./GlassCard";
 
 function DailyRewardCard() {
   return (
-    <Card className="mt-8">
-      <h2 className="text-2xl font-bold">
+    <GlassCard>
+      <h3 className="text-2xl font-bold text-white">
         Daily Reward
-      </h2>
+      </h3>
 
-      <p className="mt-3 text-gray-300">
-        Come back every day to earn exciting rewards and grow your collection.
+      <p className="mt-3 text-slate-400">
+        Claim today's reward and continue your streak.
       </p>
 
-      <Button
-        variant="gold"
-        className="mt-6 w-full"
+      <button
+        className="
+          mt-8
+          w-full
+          rounded-xl
+          bg-yellow-400
+          py-3
+          font-bold
+          text-slate-900
+          transition-all
+          duration-300
+          hover:scale-[1.02]
+          hover:bg-yellow-300
+        "
       >
         Claim Reward
-      </Button>
-    </Card>
+      </button>
+    </GlassCard>
   );
 }
 

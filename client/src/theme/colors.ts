@@ -1,17 +1,21 @@
-export const COLORS = {
-  background: "#0B1120",
-  surface: "#1E293B",
-  surfaceHover: "#334155",
+export const colors = {
+  background: "#020617",
 
-  primary: "#22C55E",
-  primaryHover: "#16A34A",
+  surface: "#0F172A",
+
+  surfaceLight: "#1E293B",
+
+  border: "#334155",
+
+  text: "#FFFFFF",
+
+  textSecondary: "#94A3B8",
 
   gold: "#FACC15",
-  goldHover: "#EAB308",
 
-  text: "#F8FAFC",
-  secondaryText: "#CBD5E1",
+  green: "#22C55E",
 
-  success: "#10B981",
-  error: "#EF4444",
+  blue: "#3B82F6",
+
+  red: "#EF4444",
 };

@@ -7,3 +7,82 @@ body,
   min-height: 100%;
   background-color: #020617;
 }
+
+/* ===========================
+   Stadium Dust Particles
+=========================== */
+
+.particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  animation: floatParticle linear infinite;
+}
+
+.particle-1 {
+  top: 15%;
+  left: 10%;
+  animation-duration: 22s;
+}
+
+.particle-2 {
+  top: 25%;
+  left: 80%;
+  animation-duration: 18s;
+}
+
+.particle-3 {
+  top: 45%;
+  left: 30%;
+  animation-duration: 24s;
+}
+
+.particle-4 {
+  top: 65%;
+  left: 70%;
+  animation-duration: 20s;
+}
+
+.particle-5 {
+  top: 75%;
+  left: 15%;
+  animation-duration: 28s;
+}
+
+.particle-6 {
+  top: 55%;
+  left: 55%;
+  animation-duration: 19s;
+}
+
+.particle-7 {
+  top: 30%;
+  left: 60%;
+  animation-duration: 25s;
+}
+
+.particle-8 {
+  top: 80%;
+  left: 85%;
+  animation-duration: 23s;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.15;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateY(-180px);
+    opacity: 0.1;
+  }
+}

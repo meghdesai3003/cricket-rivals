@@ -1,6 +1,9 @@
+import Card from "./ui/Card";
+import Button from "./ui/Button";
+
 function DailyRewardCard() {
   return (
-    <section className="mx-auto mt-8 w-11/12 max-w-4xl rounded-2xl bg-slate-800 p-6 shadow-xl">
+    <Card className="mt-8">
       <h2 className="text-2xl font-bold">
         Daily Reward
       </h2>
@@ -9,24 +12,13 @@ function DailyRewardCard() {
         Come back every day to earn exciting rewards and grow your collection.
       </p>
 
-      <button
-        className="
-          mt-6
-          w-full
-          rounded-xl
-          bg-yellow-400
-          py-3
-          font-bold
-          text-slate-900
-          transition-all
-          duration-300
-          hover:bg-yellow-300
-          hover:scale-[1.02]
-        "
+      <Button
+        variant="gold"
+        className="mt-6 w-full"
       >
         Claim Reward
-      </button>
-    </section>
+      </Button>
+    </Card>
   );
 }
 

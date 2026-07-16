@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PlayerCard from "../components/PlayerCard";
+import CollectionStats from "../components/CollectionStats";
 import { players } from "../data/players";
 
 function Collection() {
@@ -36,7 +37,6 @@ function Collection() {
 
   return (
     <main className="mx-auto min-h-screen w-11/12 max-w-7xl py-12">
-
       {/* Heading */}
       <div className="mb-10">
         <h1 className="text-4xl font-bold text-white">
@@ -47,6 +47,9 @@ function Collection() {
           Collect, upgrade and build your ultimate cricket squad.
         </p>
       </div>
+
+      {/* Collection Stats */}
+      <CollectionStats />
 
       {/* Search */}
       <div className="mb-8">
@@ -78,13 +81,13 @@ function Collection() {
         {filterButton("Gold", "bg-yellow-400")}
       </div>
 
-      {/* Results */}
+      {/* Results Count */}
       <p className="mb-6 text-slate-400">
         Showing {filteredPlayers.length} player
         {filteredPlayers.length !== 1 ? "s" : ""}
       </p>
 
-      {/* Grid */}
+      {/* Player Grid */}
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredPlayers.length > 0 ? (
           filteredPlayers.map((player) => (

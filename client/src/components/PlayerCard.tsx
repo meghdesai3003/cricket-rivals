@@ -2,110 +2,219 @@ import type { Player } from "../types/Player";
 
 interface PlayerCardProps {
   player: Player;
+  selected?: boolean;
+  onClick?: () => void;
 }
 
-function PlayerCard({ player }: PlayerCardProps) {
+const countryInfo: Record<
+  string,
+  {
+    code: string;
+    short: string;
+  }
+> = {
+  India: {
+    code: "fi-in",
+    short: "IND",
+  },
+
+  Australia: {
+    code: "fi-au",
+    short: "AUS",
+  },
+
+  England: {
+    code: "fi-gb-eng",
+    short: "ENG",
+  },
+
+  "New Zealand": {
+    code: "fi-nz",
+    short: "NZ",
+  },
+
+  "South Africa": {
+    code: "fi-za",
+    short: "SA",
+  },
+
+  Afghanistan: {
+    code: "fi-af",
+    short: "AFG",
+  },
+};
+
+function PlayerCard({
+  player,
+  selected = false,
+  onClick,
+}: PlayerCardProps) {
   const rarityStyles = {
     Standard: {
       border: "border-slate-500",
       badge: "bg-slate-600 text-white",
       overall: "text-slate-300",
+      glow: "",
     },
+
     Elite: {
       border: "border-sky-400",
       badge: "bg-sky-500 text-white",
       overall: "text-sky-300",
+      glow: "shadow-sky-500/20",
     },
+
     Gold: {
       border: "border-yellow-400",
       badge: "bg-yellow-400 text-slate-900",
       overall: "text-yellow-300",
+      glow: "shadow-yellow-500/20",
     },
   };
 
   const style = rarityStyles[player.rarity];
 
+  const country =
+    countryInfo[player.country] ?? {
+      code: "",
+      short: player.country.substring(0, 3).toUpperCase(),
+    };
+
   return (
     <div
+      onClick={onClick}
       className={`
+        relative
         group
+        cursor-pointer
         rounded-3xl
         border-2
         ${style.border}
         bg-gradient-to-b
         from-slate-900
+        via-slate-900
         to-slate-950
         p-5
-        shadow-xl
+        shadow-2xl
+        ${style.glow}
         transition-all
         duration-300
         hover:-translate-y-2
         hover:scale-[1.03]
-        hover:shadow-2xl
+        ${
+          selected
+            ? "ring-4 ring-yellow-400 shadow-yellow-500/40"
+            : ""
+        }
       `}
     >
-      {/* Rarity Badge */}
-      <div className="flex justify-end">
-        <span
-          className={`
-            rounded-full
-            px-3
-            py-1
-            text-xs
-            font-bold
-            ${style.badge}
-          `}
-        >
-          {player.rarity}
+      {selected && (
+        <div className="absolute left-4 top-4 z-30 rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
+          ✓ SELECTED
+        </div>
+      )}
+
+      <div className="flex items-start justify-between">
+        <div>
+          <p
+            className={`text-5xl font-black leading-none ${style.overall}`}
+          >
+            {player.overall}
+          </p>
+
+          <p className="text-xs tracking-[0.3em] text-slate-400">
+            OVR
+          </p>
+        </div>
+
+        <div className="flex flex-col items-end gap-2">
+          <span
+            className={`
+              rounded-full
+              px-3
+              py-1
+              text-xs
+              font-bold
+              ${style.badge}
+            `}
+          >
+            {player.rarity}
+          </span>
+
+          <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-bold text-white">
+            {player.role === "Batter"
+              ? "BAT"
+              : player.role === "Bowler"
+              ? "BOWL"
+              : player.role === "All-Rounder"
+              ? "AR"
+              : "WK"}
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-3 mb-4 flex items-center justify-center gap-2">
+        {country.code && (
+          <span
+            className={`fi ${country.code} rounded-sm text-xl`}
+          ></span>
+        )}
+
+        <span className="text-sm font-bold tracking-[0.2em] text-slate-300">
+          {country.short}
         </span>
       </div>
 
-      {/* Player Image Placeholder */}
-      <div className="mt-4 flex h-52 items-center justify-center rounded-2xl bg-slate-800">
-        <span className="text-slate-500">
-          Player Image
-        </span>
+      <div className="mb-5 flex h-72 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-slate-800 to-slate-900">
+        <img
+          src={player.image}
+          alt={player.name}
+          className="
+            h-full
+            w-full
+            object-contain
+            transition-transform
+            duration-300
+            group-hover:scale-110
+          "
+        />
       </div>
 
-      {/* Name */}
-      <h2 className="mt-5 text-center text-xl font-bold text-white">
+      <h2 className="text-center text-2xl font-extrabold uppercase tracking-wide text-white">
         {player.name}
       </h2>
 
-      {/* Country */}
-      <p className="mt-1 text-center text-sm text-slate-400">
-        {player.country}
-      </p>
-
-      {/* Overall */}
-      <div className="mt-5 text-center">
-        <p className={`text-5xl font-black ${style.overall}`}>
-          {player.overall}
-        </p>
-
-        <p className="text-xs tracking-[0.3em] text-slate-500">
-          OVERALL
-        </p>
-      </div>
-
-      {/* Divider */}
       <div className="my-5 border-t border-slate-700"></div>
 
-      {/* Stats */}
-      <div className="space-y-3 text-sm">
-        <div className="flex justify-between">
-          <span className="text-slate-400">Batting</span>
-          <span className="font-bold">{player.batting}</span>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <span className="font-semibold tracking-widest text-slate-400">
+            BAT
+          </span>
+
+          <span className="text-lg font-bold text-white">
+            {player.batting}
+          </span>
         </div>
 
-        <div className="flex justify-between">
-          <span className="text-slate-400">Bowling</span>
-          <span className="font-bold">{player.bowling}</span>
+        <div className="flex items-center justify-between">
+          <span className="font-semibold tracking-widest text-slate-400">
+            BOWL
+          </span>
+
+          <span className="text-lg font-bold text-white">
+            {player.bowling}
+          </span>
         </div>
 
-        <div className="flex justify-between">
-          <span className="text-slate-400">Fielding</span>
-          <span className="font-bold">{player.fielding}</span>
+        <div className="flex items-center justify-between">
+          <span className="font-semibold tracking-widest text-slate-400">
+            FIELD
+          </span>
+
+          <span className="text-lg font-bold text-white">
+            {player.fielding}
+          </span>
         </div>
       </div>
     </div>

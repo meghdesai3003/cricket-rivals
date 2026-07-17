@@ -7,6 +7,7 @@ import PlayingXI from "./pages/PlayingXI";
 import Collection from "./pages/Collection";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import Packs from "./pages/Packs";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/collection" element={<Collection />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/packs" element={<Packs />} />
       </Route>
     </Routes>
   );

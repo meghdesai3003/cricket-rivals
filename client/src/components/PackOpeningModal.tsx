@@ -1,12 +1,10 @@
 import { useMemo, useState } from "react";
-import AnimatedPack from "./AnimatedPack";
 
-interface Pack {
-  name: string;
-  description: string;
-  image: string;
-  cards: number;
-}
+import type { Pack } from "../data/packs";
+import { players } from "../data/players";
+
+import AnimatedPack from "./AnimatedPack";
+import RevealCard from "./RevealCard";
 
 interface PackOpeningModalProps {
   pack: Pack | null;
@@ -26,7 +24,8 @@ function PackOpeningModal({
           ring: "ring-yellow-400/70",
           shadow: "shadow-yellow-500/60",
           button: "bg-yellow-400 hover:bg-yellow-300",
-          glow: "from-yellow-400/30 via-yellow-500/10 to-transparent",
+          background:
+            "from-yellow-500/20 via-yellow-300/5 to-transparent",
         };
 
       case "Elite Pack":
@@ -34,197 +33,261 @@ function PackOpeningModal({
           ring: "ring-sky-400/70",
           shadow: "shadow-sky-500/60",
           button: "bg-sky-400 hover:bg-sky-300",
-          glow: "from-sky-400/30 via-sky-500/10 to-transparent",
+          background:
+            "from-sky-500/20 via-sky-300/5 to-transparent",
         };
 
       default:
         return {
           ring: "ring-slate-400/60",
-          shadow: "shadow-slate-400/40",
+          shadow: "shadow-slate-400/50",
           button: "bg-slate-300 hover:bg-white",
-          glow: "from-slate-400/20 via-slate-500/10 to-transparent",
+          background:
+            "from-slate-400/20 via-slate-300/5 to-transparent",
         };
     }
   }, [pack]);
 
-  const rarityBorder =
+  const borderColor =
     pack.name === "Gold Pack"
       ? "border-yellow-400"
       : pack.name === "Elite Pack"
       ? "border-sky-400"
       : "border-slate-500";
+
   const [isOpening, setIsOpening] = useState(false);
 
   const [showFlash, setShowFlash] = useState(false);
 
+  const [showCards, setShowCards] = useState(false);
+
+  const revealedPlayers = useMemo(() => {
+    return [...players]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, pack.cards);
+  }, [pack]);
+
   const handleOpen = () => {
-   if (isOpening) return;
+    if (isOpening) return;
 
-   setIsOpening(true);
+    setIsOpening(true);
 
-   setTimeout(() => {
-    setShowFlash(true);
-  }, 900);
+    setTimeout(() => {
+      setShowFlash(true);
+    }, 900);
 
-  // Batch B.4 will continue from here
-};
+    setTimeout(() => {
+      setShowFlash(false);
+      setShowCards(true);
+    }, 1500);
+  };
 
- return (
-  <div
-    onClick={onClose}
-    className="
-      fixed
-      inset-0
-      z-50
-      flex
-      items-center
-      justify-center
-      bg-black/80
-      backdrop-blur-md
-      animate-fadeIn
-      p-6
-    "
-  >
-    {showFlash && (
-  <div
-    className="
-      absolute
-      inset-0
-      z-[60]
-      animate-pulse
-      bg-white
-      opacity-90
-    "
-  />
-)}
+    return (
     <div
-      onClick={(e) => e.stopPropagation()}
-      className={`
-        relative
-        w-full
-        max-w-xl
-        overflow-hidden
-        rounded-3xl
-        border-2
-        ${rarityBorder}
-        bg-gradient-to-b
-        from-slate-900
-        via-slate-900
-        to-slate-950
-        p-8
-        shadow-2xl
-        ${glow.shadow}
-        animate-scaleIn
-      `}
+      onClick={onClose}
+      className="
+        fixed
+        inset-0
+        z-50
+        flex
+        items-center
+        justify-center
+        bg-black/80
+        backdrop-blur-md
+        animate-fadeIn
+        p-6
+      "
     >
-      {/* Animated Glow */}
+      {/* Flash Overlay */}
+
+      {showFlash && (
+        <div
+          className="
+            absolute
+            inset-0
+            z-[60]
+            bg-white
+            opacity-90
+          "
+        />
+      )}
 
       <div
+        onClick={(e) => e.stopPropagation()}
         className={`
-          absolute
-          inset-0
-          bg-gradient-radial
-          ${glow.glow}
-          opacity-70
-          blur-3xl
-          animate-pulse
-          pointer-events-none
+          relative
+          w-full
+          max-w-6xl
+          overflow-hidden
+          rounded-3xl
+          border-2
+          ${borderColor}
+          bg-gradient-to-b
+          from-slate-900
+          via-slate-900
+          to-slate-950
+          p-8
+          shadow-2xl
+          ${glow.shadow}
+          animate-scaleIn
         `}
-      />
-
-      {/* Close Button */}
-
-      <button
-        onClick={onClose}
-        className="
-          absolute
-          right-5
-          top-5
-          z-20
-          flex
-          h-11
-          w-11
-          items-center
-          justify-center
-          rounded-full
-          bg-slate-800
-          text-2xl
-          font-bold
-          text-white
-          transition-all
-          duration-300
-          hover:rotate-90
-          hover:bg-red-500
-        "
       >
-        ×
-      </button>
+        {/* Background Glow */}
 
-      {/* Heading */}
+        <div
+          className={`
+            absolute
+            inset-0
+            bg-gradient-to-b
+            ${glow.background}
+            opacity-70
+            blur-3xl
+            pointer-events-none
+          `}
+        />
 
-      <div className="relative z-10">
+        {/* Close Button */}
 
-        <h2 className="text-center text-4xl font-black text-white">
-          {pack.name}
-        </h2>
+        <button
+          onClick={onClose}
+          className="
+            absolute
+            right-5
+            top-5
+            z-30
+            flex
+            h-11
+            w-11
+            items-center
+            justify-center
+            rounded-full
+            bg-slate-800
+            text-2xl
+            font-bold
+            text-white
+            transition-all
+            duration-300
+            hover:rotate-90
+            hover:bg-red-500
+          "
+        >
+          ×
+        </button>
 
-        <p className="mt-3 text-center text-slate-400">
-          {pack.description}
-        </p>
+        {/* Heading */}
 
-      </div>
+        <div className="relative z-20">
 
-        {/* Pack Image */}
+          <h2 className="text-center text-4xl font-black text-white">
+            {pack.name}
+          </h2>
 
-      <div className="relative z-10 mt-10 flex justify-center">
+          <p className="mt-3 text-center text-slate-400">
+            {pack.description}
+          </p>
 
-  <AnimatedPack
-    image={pack.image}
-    name={pack.name}
-    ring={glow.ring}
-    opening={isOpening}
-  />
-
-</div>
-
-{/* Cards */}
-
-<div className="relative z-10 mt-8 text-center">
-
-  <span className="rounded-full bg-slate-800 px-5 py-2 text-lg font-bold text-yellow-300 shadow-lg">
-    {pack.cards} Cards
-  </span>
-
-</div>
-
-{/* Tap To Open */}
-
-<div className="relative z-10 mt-10">
-
-  <button
-    onClick={handleOpen}
-    disabled={isOpening}
-    className={`
-      w-full
-      rounded-2xl
-      py-4
-      text-xl
-      font-bold
-      text-slate-900
-      transition-all
-      duration-300
-      hover:scale-105
-      animate-pulse
-      ${glow.button}
-    `}
-  >
-     {isOpening ? "Opening..." : " Tap To Open "}
-  </button>
-
-</div>
         </div>
-  </div>
-);
-}
 
+        {/* Pack */}
+
+        {!showCards && (
+
+          <div className="relative z-20 mt-10 flex justify-center">
+
+            <AnimatedPack
+              image={pack.image}
+              name={pack.name}
+              ring={glow.ring}
+              opening={isOpening}
+            />
+
+          </div>
+
+        )}
+
+        {/* Reveal Cards */}
+
+        {showCards && (
+
+          <div
+            className="
+              relative
+              z-20
+              mt-10
+              grid
+              grid-cols-1
+              gap-8
+              justify-items-center
+              sm:grid-cols-2
+              lg:grid-cols-5
+            "
+          >
+            {revealedPlayers.map((player, index) => (
+
+              <RevealCard
+                key={player.id}
+                player={player}
+                delay={index * 400}
+              />
+
+            ))}
+          </div>
+
+        )}
+
+        {/* Footer */}
+
+        {!showCards && (
+
+          <>
+            <div className="relative z-20 mt-8 text-center">
+
+              <span
+                className="
+                  rounded-full
+                  bg-slate-800
+                  px-5
+                  py-2
+                  text-lg
+                  font-bold
+                  text-yellow-300
+                "
+              >
+                {pack.cards} Cards
+              </span>
+
+            </div>
+
+            <div className="relative z-20 mt-10">
+
+              <button
+                onClick={handleOpen}
+                disabled={isOpening}
+                className={`
+                  w-full
+                  rounded-2xl
+                  py-4
+                  text-xl
+                  font-bold
+                  text-slate-900
+                  transition-all
+                  duration-300
+                  hover:scale-105
+                  ${glow.button}
+                `}
+              >
+                {isOpening
+                  ? "Opening..."
+                  : " Tap To Open "}
+              </button>
+
+            </div>
+
+          </>
+
+        )}
+        </div>
+      </div>
+    );
+}
 export default PackOpeningModal;

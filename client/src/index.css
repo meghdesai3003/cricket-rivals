@@ -117,3 +117,189 @@ body,
 .animate-scaleIn {
   animation: scaleIn 0.25s ease;
 }
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.8);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-cardEntrance {
+  animation: cardEntrance 600ms ease-out forwards;
+}
+
+@keyframes goldGlow {
+
+  0% {
+    filter: drop-shadow(0 0 5px gold);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 25px gold);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 5px gold);
+  }
+
+}
+
+.animate-goldGlow{
+  animation: goldGlow 1.6s infinite;
+}
+
+@keyframes eliteGlow{
+
+  0%{
+    filter: drop-shadow(0 0 5px #38bdf8);
+  }
+
+  50%{
+    filter: drop-shadow(0 0 18px #38bdf8);
+  }
+
+  100%{
+    filter: drop-shadow(0 0 5px #38bdf8);
+  }
+
+}
+
+.animate-eliteGlow{
+  animation: eliteGlow 1.8s infinite;
+}
+
+@keyframes shine{
+
+  from{
+    transform:translateX(-120%);
+  }
+
+  to{
+    transform:translateX(220%);
+  }
+
+}
+
+.animate-shine{
+  animation:shine 1.8s linear infinite;
+}
+
+/* ========================= */
+/* 3D CARD UTILITIES */
+/* ========================= */
+
+.perspective {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* ========================= */
+/* CARD ENTRANCE */
+/* ========================= */
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.8);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-cardEntrance {
+  animation: cardEntrance 600ms ease-out forwards;
+}
+
+/* ========================= */
+/* GOLD GLOW */
+/* ========================= */
+
+@keyframes goldGlow {
+  0% {
+    filter: drop-shadow(0 0 6px #facc15);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 22px #facc15);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 6px #facc15);
+  }
+}
+
+.animate-goldGlow {
+  animation: goldGlow 1.6s ease-in-out infinite;
+}
+
+/* ========================= */
+/* ELITE GLOW */
+/* ========================= */
+
+@keyframes eliteGlow {
+  0% {
+    filter: drop-shadow(0 0 5px #38bdf8);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 18px #38bdf8);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 5px #38bdf8);
+  }
+}
+
+.animate-eliteGlow {
+  animation: eliteGlow 1.8s ease-in-out infinite;
+}
+
+/* ========================= */
+/* GOLD SHINE */
+/* ========================= */
+
+@keyframes shine {
+  from {
+    transform: translateX(-120%);
+  }
+
+  to {
+    transform: translateX(220%);
+  }
+}
+
+.animate-shine {
+  animation: shine 1.8s linear infinite;
+}

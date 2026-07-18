@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo-placeholder.svg";
+import { useCoins } from "../context/CoinContext";
 
 function Header() {
+  const { coins } = useCoins();
+
   const navLink =
     "transition-all duration-300 hover:text-yellow-400";
 
@@ -104,7 +107,7 @@ function Header() {
             </p>
 
             <p className="text-lg font-bold text-yellow-400">
-              5000
+              {coins.toLocaleString()}
             </p>
           </div>
 

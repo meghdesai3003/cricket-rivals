@@ -52,24 +52,18 @@ function addPlayers(players: Player[]) {
     const updated = [...prev];
 
     players.forEach((player) => {
-
       const existing = updated.find(
         (p) => p.id === player.id
       );
 
       if (existing) {
-
         existing.owned += 1;
-
       } else {
-
         updated.push({
           ...player,
           owned: 1,
         });
-
       }
-
     });
 
     return updated;

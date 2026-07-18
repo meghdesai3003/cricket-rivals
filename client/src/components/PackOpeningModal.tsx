@@ -6,6 +6,7 @@ import { generatePack } from "../utils/generatePack";
 import AnimatedPack from "./AnimatedPack";
 import RevealCard from "./RevealCard";
 import { useCollection } from "../context/CollectionContext";
+import { useCoins } from "../context/CoinContext";
 
 interface PackOpeningModalProps {
   pack: Pack | null;
@@ -18,7 +19,8 @@ function PackOpeningModal({
 }: PackOpeningModalProps) {
   if (!pack) return null;
 
-  const { addPlayers } = useCollection();
+  const { addPlayers, collection } = useCollection();
+  const { addCoins } = useCoins();
 
   const glow = useMemo(() => {
     switch (pack.name) {
@@ -68,23 +70,59 @@ function PackOpeningModal({
     return generatePack(pack.name);
   }, [pack]);
 
-  const handleOpen = () => {
-    if (isOpening) return;
+const calculateDuplicateReward = () => {
+  let reward = 0;
 
-    setIsOpening(true);
+  revealedPlayers.forEach((player) => {
+    const alreadyOwned = collection.find(
+      (p) => p.id === player.id
+    );
 
-    setTimeout(() => {
-      setShowFlash(true);
-    }, 900);
+    if (!alreadyOwned) return;
 
-    setTimeout(() => {
-      setShowFlash(false);
-      setShowCards(true);
+    switch (player.rarity) {
+      case "Gold":
+        reward += 300;
+        break;
 
-      addPlayers(revealedPlayers);
+      case "Elite":
+        reward += 150;
+        break;
 
-    }, 1400);
-  };
+      default:
+        reward += 50;
+    }
+  });
+
+  return reward;
+};
+
+const handleOpen = () => {
+  if (isOpening) return;
+
+  setIsOpening(true);
+
+  // Calculate duplicate reward
+  const reward = calculateDuplicateReward();
+
+  // Award duplicate coins
+  if (reward > 0) {
+    addCoins(reward);
+  }
+
+  // Save ALL opened players
+  addPlayers(revealedPlayers);
+
+  // Opening animation
+  setTimeout(() => {
+    setShowFlash(true);
+  }, 900);
+
+  setTimeout(() => {
+    setShowFlash(false);
+    setShowCards(true);
+  }, 1400);
+};
 
     return (
     <div

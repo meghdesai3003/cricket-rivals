@@ -119,35 +119,6 @@ return (
       }
     `}
   >
-    {/* Duplicate Badge */}
-
-    {player.owned > 1 && (
-      <div
-        className="
-          absolute
-          right-4
-          top-4
-          z-30
-          rounded-full
-          bg-black/80
-          px-3
-          py-1
-          text-xs
-          font-bold
-          text-yellow-300
-          backdrop-blur-md
-          shadow-lg
-        "
-      >
-        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-300">
-          Owned
-        </p>
-
-        <p className="text-center text-sm font-extrabold text-yellow-300">
-          x{player.owned}
-        </p>
-      </div>
-    )}
 
     {/* Selected Badge */}
 

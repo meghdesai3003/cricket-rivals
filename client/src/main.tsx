@@ -5,13 +5,16 @@ import "./index.css";
 import App from "./App";
 import "flag-icons/css/flag-icons.min.css";
 import { CollectionProvider } from "./context/CollectionContext";
+import { CoinProvider } from "./context/CoinContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-    <CollectionProvider>
+     <CoinProvider>
+      <CollectionProvider>
        <App />
-    </CollectionProvider>
+      </CollectionProvider>
+     </CoinProvider>
     </BrowserRouter>
   </StrictMode>
 );

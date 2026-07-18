@@ -1,9 +1,49 @@
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
 import logo from "../assets/logo-placeholder.svg";
 import { useCoins } from "../context/CoinContext";
 
 function Header() {
   const { coins } = useCoins();
+
+  const [displayCoins, setDisplayCoins] = useState(coins);
+  const [animateCoins, setAnimateCoins] = useState(false);
+
+  useEffect(() => {
+    if (displayCoins === coins) return;
+
+    setAnimateCoins(true);
+
+    const difference = coins - displayCoins;
+
+    const step = Math.max(
+      1,
+      Math.ceil(Math.abs(difference) / 25)
+    );
+
+    const interval = setInterval(() => {
+      setDisplayCoins((current) => {
+        if (current < coins) {
+          return Math.min(current + step, coins);
+        }
+
+        if (current > coins) {
+          return Math.max(current - step, coins);
+        }
+
+        return current;
+      });
+    }, 18);
+
+    const timeout = setTimeout(() => {
+      setAnimateCoins(false);
+    }, 700);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [coins, displayCoins]);
 
   const navLink =
     "transition-all duration-300 hover:text-yellow-400";
@@ -39,7 +79,7 @@ function Header() {
 
         {/* Navigation */}
 
-        <nav className="flex items-center gap-8 text-white font-semibold">
+        <nav className="flex items-center gap-8 font-semibold text-white">
 
           <NavLink
             to="/"
@@ -106,8 +146,21 @@ function Header() {
               Coins
             </p>
 
-            <p className="text-lg font-bold text-yellow-400">
-              {coins.toLocaleString()}
+            <p
+              className={`
+                text-lg
+                font-bold
+                text-yellow-400
+                transition-all
+                duration-300
+                ${
+                  animateCoins
+                    ? "scale-125 drop-shadow-[0_0_14px_gold]"
+                    : "scale-100"
+                }
+              `}
+            >
+              {displayCoins.toLocaleString()}
             </p>
           </div>
 

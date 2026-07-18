@@ -66,6 +66,10 @@ function PackOpeningModal({
 
   const [showCards, setShowCards] = useState(false);
 
+  const [rewardPopup, setRewardPopup] = useState<number | null>(null);
+
+  const [flyCoins, setFlyCoins] = useState(false);
+
   const revealedPlayers = useMemo(() => {
     return generatePack(pack.name);
   }, [pack]);
@@ -106,9 +110,9 @@ const handleOpen = () => {
   const reward = calculateDuplicateReward();
 
   // Award duplicate coins
-  if (reward > 0) {
-    addCoins(reward);
-  }
+if (reward > 0) {
+  addCoins(reward);
+}
 
   // Save ALL opened players
   addPlayers(revealedPlayers);
@@ -119,9 +123,27 @@ const handleOpen = () => {
   }, 900);
 
   setTimeout(() => {
-    setShowFlash(false);
-    setShowCards(true);
-  }, 1400);
+  setShowFlash(false);
+  setShowCards(true);
+
+  // Wait until all cards finish flipping
+  setTimeout(() => {
+    if (reward > 0) {
+      setRewardPopup(reward);
+
+setFlyCoins(true);
+
+setTimeout(() => {
+    setFlyCoins(false);
+},900);
+
+setTimeout(() => {
+    setRewardPopup(null);
+},2500);
+    }
+  }, revealedPlayers.length * 400 + 700);
+
+}, 1400);
 };
 
     return (
@@ -246,6 +268,55 @@ const handleOpen = () => {
           </div>
 
         )}
+        {rewardPopup && (
+  <div
+    className="
+      absolute
+      left-1/2
+      top-32
+      z-50
+      -translate-x-1/2
+      animate-bounce
+    "
+  >
+    <div
+      className="
+        rounded-2xl
+        border
+        border-yellow-400
+        bg-slate-900/95
+        px-8
+        py-5
+        text-center
+        shadow-2xl
+        shadow-yellow-500/30
+      "
+    >
+      <p className="text-lg font-bold text-yellow-300">
+         Duplicate Reward
+      </p>
+
+      <p className="mt-2 text-3xl font-black text-yellow-400">
+        +{rewardPopup} 🪙
+        {flyCoins && (
+    <div
+        className="
+            absolute
+            left-1/2
+            top-10
+            -translate-x-1/2
+            animate-[coinFly_0.9s_ease-out_forwards]
+            text-4xl
+            pointer-events-none
+        "
+    >
+        🪙
+    </div>
+)}
+      </p>
+    </div>
+  </div>
+)}
 
         {/* Reveal Cards */}
 

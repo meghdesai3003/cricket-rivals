@@ -2,15 +2,16 @@ import { useState } from "react";
 import PlayerCard from "../components/PlayerCard";
 import PlayerModal from "../components/PlayerModal";
 import CollectionStats from "../components/CollectionStats";
-import { players } from "../data/players";
 import type { Player } from "../types/Player";
+import { useCollection } from "../context/CollectionContext";
 
 function Collection() {
   const [search, setSearch] = useState("");
   const [selectedRarity, setSelectedRarity] = useState("All");
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+  const { collection } = useCollection();
 
-  const filteredPlayers = players.filter((player) => {
+  const filteredPlayers = collection.filter((player) => {
     const matchesSearch = player.name
       .toLowerCase()
       .includes(search.toLowerCase());

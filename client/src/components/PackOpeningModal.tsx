@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
 
 import type { Pack } from "../data/packs";
-import { players } from "../data/players";
+import { generatePack } from "../utils/generatePack";
 
 import AnimatedPack from "./AnimatedPack";
 import RevealCard from "./RevealCard";
+import { useCollection } from "../context/CollectionContext";
 
 interface PackOpeningModalProps {
   pack: Pack | null;
@@ -16,6 +17,8 @@ function PackOpeningModal({
   onClose,
 }: PackOpeningModalProps) {
   if (!pack) return null;
+
+  const { addPlayers } = useCollection();
 
   const glow = useMemo(() => {
     switch (pack.name) {
@@ -62,9 +65,7 @@ function PackOpeningModal({
   const [showCards, setShowCards] = useState(false);
 
   const revealedPlayers = useMemo(() => {
-    return [...players]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, pack.cards);
+    return generatePack(pack.name);
   }, [pack]);
 
   const handleOpen = () => {
@@ -79,7 +80,10 @@ function PackOpeningModal({
     setTimeout(() => {
       setShowFlash(false);
       setShowCards(true);
-    }, 1500);
+
+      addPlayers(revealedPlayers);
+
+    }, 1400);
   };
 
     return (

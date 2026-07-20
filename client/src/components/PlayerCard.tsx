@@ -110,8 +110,9 @@ return (
       ${style.glow}
       transition-all
       duration-300
-      hover:-translate-y-2
-      hover:scale-[1.03]
+      hover:-translate-y-3
+      hover:scale-105
+      hover:rotate-[0.4deg]
       ${
         selected
           ? "ring-4 ring-yellow-400 shadow-yellow-500/40"

@@ -65,21 +65,21 @@ function PlayerCard({
       border: "border-slate-500",
       badge: "bg-slate-600 text-white",
       overall: "text-slate-300",
-      glow: "",
+      glow: "shadow-slate-900/70"
     },
 
     Elite: {
       border: "border-sky-400",
       badge: "bg-sky-500 text-white",
       overall: "text-sky-300",
-      glow: "shadow-sky-500/20",
+      glow: "shadow-sky-500/35"
     },
 
     Gold: {
       border: "border-yellow-400",
       badge: "bg-yellow-400 text-slate-900",
       overall: "text-yellow-300",
-      glow: "shadow-yellow-500/20",
+      glow: "shadow-yellow-500/40"
     },
   };
 
@@ -93,26 +93,34 @@ function PlayerCard({
 
 return (
   <div
+  
     onClick={onClick}
     className={`
       relative
       group
       cursor-pointer
-      rounded-3xl
-      border-2
+      overflow-hidden
+
+      rounded-[32px]
+
+      border-[3px]
       ${style.border}
+
       bg-gradient-to-b
       from-slate-900
-      via-slate-900
-      to-slate-950
-      p-5
+      via-slate-950
+      to-black
+
       shadow-2xl
       ${style.glow}
       transition-all
-      duration-300
-      hover:-translate-y-3
-      hover:scale-105
-      hover:rotate-[0.4deg]
+      duration-500
+
+      hover:-translate-y-5
+      hover:scale-[1.05]
+      hover:rotate-[0.5deg]
+
+      hover:shadow-[0_35px_80px_rgba(0,0,0,0.75)]
       ${
         selected
           ? "ring-4 ring-yellow-400 shadow-yellow-500/40"
@@ -120,6 +128,85 @@ return (
       }
     `}
   >
+    {/* Metallic Frame */}
+
+<div
+  className="
+    absolute
+    inset-0
+    rounded-[30px]
+    border
+    border-white/10
+    pointer-events-none
+  "
+/>
+
+{/* Inner Highlight */}
+
+<div
+  className="
+    absolute
+    inset-[5px]
+    rounded-[26px]
+    border
+    border-white/5
+    pointer-events-none
+  "
+/>
+
+{/* Top Metallic Shine */}
+
+<div
+  className="
+    absolute
+    left-0
+    top-0
+    h-24
+    w-full
+
+    bg-gradient-to-b
+    from-white/10
+    to-transparent
+
+    pointer-events-none
+  "
+/>
+{/* Animated Shine */}
+
+<div
+  className="
+    pointer-events-none
+    absolute
+    inset-0
+    overflow-hidden
+    rounded-[32px]
+  "
+>
+
+  <div
+    className="
+      absolute
+      -left-32
+      top-0
+
+      h-full
+      w-20
+
+      rotate-12
+
+      bg-gradient-to-r
+      from-transparent
+      via-white/20
+      to-transparent
+
+      transition-all
+      duration-700
+
+      group-hover:left-[120%]
+    "
+  />
+
+</div>
 
     {/* Selected Badge */}
 
@@ -130,33 +217,74 @@ return (
     )}
 
     <div className="flex items-start justify-between">
-      <div>
-        <p
-          className={`text-5xl font-black leading-none ${style.overall}`}
-        >
-          {player.overall}
-        </p>
+      <div className="flex flex-col">
+  <p
+    className={`
+      text-6xl lg:text-7xl
+      transition-all
+      duration-300
+      group-hover:scale-110
+      font-black
+      leading-none
+      tracking-tight
+      ${style.overall}
+    `}
+  >
+    {player.overall}
+  </p>
 
-        <p className="text-xs tracking-[0.3em] text-slate-400">
-          OVR
-        </p>
-      </div>
+  <p
+    className="
+      mt-1
+      text-[9px]
+      font-bold
+      tracking-[0.30em]
+      text-slate-400
+    "
+  >
+    OVERALL
+  </p>
+</div>
 
       <div className="flex flex-col items-end gap-2">
         <span
-          className={`
-            rounded-full
-            px-3
-            py-1
-            text-xs
-            font-bold
-            ${style.badge}
-          `}
-        >
-          {player.rarity}
-        </span>
+  className={`
+    rounded-full
+    px-3
+    py-1.5
+    text-[9px]
+    font-black
+    tracking-[0.18em]
+    uppercase
+    shadow-lg
+    transition-all
+    duration-300
+    group-hover:scale-110
+    ${style.badge}
+  `}
+>
+  {player.rarity === "Gold"
+    ? "★★★★★ GOLD"
+    : player.rarity === "Elite"
+    ? "★★★ ELITE"
+    : "★ STANDARD"}
+</span>
 
-        <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-bold text-white">
+        <span
+  className="
+    rounded-full
+    border
+    border-slate-600
+    bg-slate-800
+    px-3
+    py-1
+    text-[10px]
+    font-black
+    tracking-[0.18em]
+    text-white
+    shadow-lg
+  "
+>
           {player.role === "Batter"
             ? "BAT"
             : player.role === "Bowler"
@@ -168,71 +296,211 @@ return (
       </div>
     </div>
 
-    <div className="mb-4 mt-3 flex items-center justify-center gap-2">
+    <div className="mb-5 mt-5 flex items-center justify-center gap-3">
       {country.code && (
         <span
           className={`fi ${country.code} rounded-sm text-xl`}
         ></span>
       )}
 
-      <span className="text-sm font-bold tracking-[0.2em] text-slate-300">
+      <span
+  className="
+    text-xs
+    font-black
+    tracking-[0.25em]
+    text-white
+  "
+>
         {country.short}
       </span>
     </div>
 
-    <div className="mb-5 flex h-72 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-slate-800 to-slate-900">
-      <img
-        src={player.image}
-        alt={player.name}
-        className="
-          h-full
-          w-full
-          object-contain
-          transition-transform
-          duration-300
-          group-hover:scale-110
-        "
-      />
-    </div>
+    <div
+  className="
+    relative
+    mt-5
+    mb-6
+    flex
+    h-[340px]
+    items-end
+    justify-center
+    overflow-hidden
+    rounded-[28px]
 
-    <h2 className="text-center text-2xl font-extrabold uppercase tracking-wide text-white">
+    bg-gradient-to-b
+    from-slate-800
+    via-slate-900
+    to-black
+  "
+>
+
+  {/* Background Glow */}
+
+  <div
+  className={`
+    absolute
+    top-10
+    h-52
+    w-52
+    rounded-full
+    blur-3xl
+    transition-all
+    duration-500
+    group-hover:scale-125
+    group-hover:opacity-100
+
+    ${
+      player.rarity === "Gold"
+        ? "bg-yellow-400/20"
+        : player.rarity === "Elite"
+        ? "bg-sky-400/15"
+        : "bg-slate-300/10"
+    }
+  `}
+/>
+
+  {/* Secondary Glow */}
+
+  <div
+    className="
+      absolute
+      bottom-10
+      h-44
+      w-44
+      rounded-full
+
+      bg-white/5
+
+      blur-2xl
+    "
+  />
+
+  {/* Image */}
+
+  <img
+    src={player.image}
+    alt={player.name}
+    className="
+      relative
+      z-20
+
+      h-[320px]
+
+      object-contain
+
+      drop-shadow-[0_20px_35px_rgba(0,0,0,0.65)]
+
+      transition-all
+      duration-500
+
+      group-hover:scale-[1.14]
+      group-hover:-translate-y-4
+      grou-hover:drop-shadow-[0_35px_45px_rgba(255,255,255,0.12)]
+    "
+  />
+
+</div>
+
+    <h2 className="text-center text-xl font-extrabold uppercase tracking-normal text-white">
       {player.name}
     </h2>
 
     <div className="my-5 border-t border-slate-700"></div>
 
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <span className="font-semibold tracking-widest text-slate-400">
-          BAT
-        </span>
+    <div className="space-y-6">
 
-        <span className="text-lg font-bold text-white">
-          {player.batting}
-        </span>
-      </div>
+  {/* Batting */}
 
-      <div className="flex items-center justify-between">
-        <span className="font-semibold tracking-widest text-slate-400">
-          BOWL
-        </span>
+  <div>
 
-        <span className="text-lg font-bold text-white">
-          {player.bowling}
-        </span>
-      </div>
+    <div className="mb-2 flex items-center justify-between">
 
-      <div className="flex items-center justify-between">
-        <span className="font-semibold tracking-widest text-slate-400">
-          FIELD
-        </span>
+      <span className="font-semibold tracking-[0.25em] text-slate-300">
+        BAT
+      </span>
 
-        <span className="text-lg font-bold text-white">
-          {player.fielding}
-        </span>
-      </div>
+      <span className="text-base font-black text-white">
+        {player.batting}
+      </span>
+
     </div>
+
+    <div className="mt-2 px-1">
+  <div className="h-1.5 overflow-hidden rounded-full bg-slate-800"></div>
+
+      <div
+        className="h-full rounded-full bg-green-400 transition-all duration-700"
+        style={{
+          width: `${player.batting}%`,
+        }}
+      />
+
+    </div>
+
   </div>
+
+  {/* Bowling */}
+
+  <div>
+
+    <div className="mb-2 flex items-center justify-between">
+
+      <span className="font-bold tracking-[0.25em] text-slate-300">
+        BOWL
+      </span>
+
+      <span className="text-lg font-black text-white">
+        {player.bowling}
+      </span>
+
+    </div>
+
+    <div className="mt-2 px-1">
+  <div className="h-1.5 overflow-hidden rounded-full bg-slate-800"></div>
+
+      <div
+        className="h-full rounded-full bg-sky-400 transition-all duration-700"
+        style={{
+          width: `${player.bowling}%`,
+        }}
+      />
+
+    </div>
+
+  </div>
+
+  {/* Fielding */}
+
+  <div>
+
+    <div className="mb-2 flex items-center justify-between">
+
+      <span className="font-bold tracking-[0.25em] text-slate-300">
+        FIELD
+      </span>
+
+      <span className="text-lg font-black text-white">
+        {player.fielding}
+      </span>
+
+    </div>
+
+    <div className="h-1.5 overflow-hidden rounded-full bg-slate-800">
+
+      <div
+        className="h-full rounded-full bg-yellow-400 transition-all duration-700"
+        style={{
+          width: `${player.fielding}%`,
+        }}
+      />
+
+    </div>
+
+  </div>
+
+  </div>
+
+</div>
 );
 }
 

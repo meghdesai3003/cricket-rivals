@@ -102,14 +102,17 @@ return (
       overflow-hidden
 
       rounded-[32px]
+      pb-7
 
       border-[3px]
       ${style.border}
 
       bg-gradient-to-b
-      from-slate-900
-      via-slate-950
-      to-black
+      from-[#1d2638]
+      via-[#101827]
+      to-[#05070d]
+
+      pb-7
 
       shadow-2xl
       ${style.glow}
@@ -158,17 +161,20 @@ return (
 
 <div
   className="
+    pointer-events-none
+
     absolute
+    bottom-0
     left-0
-    top-0
-    h-24
+
+    h-20
     w-full
 
-    bg-gradient-to-b
-    from-white/10
+    bg-gradient-to-t
+
+    from-yellow-400/5
     to-transparent
 
-    pointer-events-none
   "
 />
 {/* Animated Shine */}
@@ -246,7 +252,7 @@ return (
   </p>
 </div>
 
-      <div className="flex flex-col items-end gap-2">
+      <div className="flex flex-col items-center gap-2">
         <span
   className={`
     rounded-full
@@ -299,7 +305,7 @@ return (
     <div className="mb-5 mt-5 flex items-center justify-center gap-3">
       {country.code && (
         <span
-          className={`fi ${country.code} rounded-sm text-xl`}
+          className={`fi ${country.code} rounded-sm text-[28px]`}
         ></span>
       )}
 
@@ -321,7 +327,7 @@ return (
     mt-5
     mb-6
     flex
-    h-[340px]
+    h-[290px]
     items-end
     justify-center
     overflow-hidden
@@ -384,28 +390,40 @@ return (
       relative
       z-20
 
-      h-[320px]
+      h-[315px]
 
       object-contain
 
-      drop-shadow-[0_20px_35px_rgba(0,0,0,0.65)]
+      drop-shadow-[0_25px_40px_rgba(0,0,0,0.65)]
 
       transition-all
       duration-500
 
-      group-hover:scale-[1.14]
-      group-hover:-translate-y-4
-      grou-hover:drop-shadow-[0_35px_45px_rgba(255,255,255,0.12)]
+      group-hover:scale-[1.12]
+      group-hover:-translate-y-0
     "
   />
 
 </div>
 
-    <h2 className="text-center text-xl font-extrabold uppercase tracking-normal text-white">
+    <h2 className="text-center text-[28px] font-extrabold uppercase tracking-wide text-white drop-shadow-md">
       {player.name}
     </h2>
 
     <div className="my-5 border-t border-slate-700"></div>
+
+    <div
+    className="
+    my-5
+    h-px
+    w-full
+
+    bg-gradient-to-r
+    from-transparent
+    via-slate-600
+    to-transparent
+"
+/>
 
     <div className="space-y-6">
 
@@ -426,12 +444,13 @@ return (
     </div>
 
     <div className="mt-2 px-1">
-  <div className="h-1.5 overflow-hidden rounded-full bg-slate-800"></div>
+  <div className="mt-2 w-full rounded-full bg-slate-800"></div>
 
       <div
-        className="h-full rounded-full bg-green-400 transition-all duration-700"
+        className="rounded-full bg-green-500"
         style={{
           width: `${player.batting}%`,
+          height: "6px",
         }}
       />
 
@@ -456,12 +475,13 @@ return (
     </div>
 
     <div className="mt-2 px-1">
-  <div className="h-1.5 overflow-hidden rounded-full bg-slate-800"></div>
+  <div className="mt-2 w-full rounded-full bg-slate-800"></div>
 
       <div
-        className="h-full rounded-full bg-sky-400 transition-all duration-700"
+        className="rounded-full bg-sky-400"
         style={{
           width: `${player.bowling}%`,
+          height: "6px" ,
         }}
       />
 

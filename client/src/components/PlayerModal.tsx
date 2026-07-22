@@ -1,4 +1,5 @@
 import type { Player } from "../types/Player";
+import * as PlayingXIContext from "../context/PlayingXIContext";
 
 interface PlayerModalProps {
   player: Player | null;
@@ -90,6 +91,10 @@ function PlayerModal({
   };
 
   const style = rarityStyle[player.rarity];
+  // Support environments where usePlayingXI may not be exported; fallback to noop
+  const { addPlayer } = (PlayingXIContext as any).usePlayingXI
+    ? (PlayingXIContext as any).usePlayingXI()
+    : { addPlayer: () => {} };
 
   function StatBar({
     label,
@@ -274,6 +279,10 @@ shadow-2xl
         </div>
 
         <button
+          onClick={() => {
+            addPlayer(player);
+            onClose();
+          }}
           className="
             mt-6
             w-full

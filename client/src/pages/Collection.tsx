@@ -13,7 +13,18 @@ function Collection() {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const { collection } = useCollection();
 
+  // Album data
+  const albumCountries = ["India", "Australia", "England", "Pakistan"];
+  const [selectedCountry, setSelectedCountry] = useState<string>(
+    albumCountries[0]
+  );
+
+  // Simple placeholder for album players per selected country.
+  // In a real app this would come from data/store.
+  const albumPlayers: string[] = [];
+
   const filteredPlayers = collection
+
     .filter((player: Player) => {
       const matchesSearch = player.name
         .toLowerCase()
@@ -143,6 +154,10 @@ const roleButton = (role: string) => (
           <p className="mt-2 text-slate-400">
             Collect, upgrade and build your ultimate cricket squad.
           </p>
+
+          <div className="mt-6 flex gap-3">
+
+</div>
         </div>
 
        {/* <CollectionStats /> */}
@@ -359,39 +374,90 @@ const roleButton = (role: string) => (
   </div>
 
 </div>
+<div className="mb-10 flex items-center justify-between">
+
+</div>
 
         {/* Cards */}
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredPlayers.length > 0 ? (
-            filteredPlayers.map((player, index) => (
-  <div
-    key={player.id}
-    onClick={() => setSelectedPlayer(player)}
-    className="
-      cursor-pointer
-      animate-fadeUp
-    "
-    style={{
-      animationDelay: `${index * 40}ms`,
-      animationFillMode: "both",
-    }}
-  >
-    <PlayerCard player={player} />
-  </div>
-))
-          ) : (
-            <div className="col-span-full py-20 text-center">
-              <h2 className="text-2xl font-bold text-white">
-                No players found
-              </h2>
+       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {filteredPlayers.length > 0 ? (
+    filteredPlayers.map((player) => (
+      <div
+        key={player.id}
+        onClick={() => setSelectedPlayer(player)}
+        className="cursor-pointer"
+      >
+        <PlayerCard player={player} />
+      </div>
+    ))
+  ) : (
+    <div className="col-span-full py-20 text-center">
+      <h2 className="text-2xl font-bold text-white">
+        No players found
+      </h2>
 
-              <p className="mt-3 text-slate-400">
-                Try another search or filter.
-              </p>
-            </div>
-          )}
-        </div>
+      <p className="mt-3 text-slate-400">
+        Try another search or filter.
+      </p>
+    </div>
+  )}
+</div> 
+
+) : (
+
+  <div className="rounded-3xl border border-slate-800 bg-slate-900 p-10">
+
+    <h2 className="mb-8 text-3xl font-bold text-yellow-400">
+  Cricket Album
+</h2>
+
+<div className="mb-10 flex flex-wrap gap-3">
+
+  {albumCountries.map((country) => (
+
+    <button
+      key={country}
+      onClick={() => setSelectedCountry(country)}
+      className={`
+        rounded-xl
+        px-5
+        py-2
+        font-bold
+        transition-all
+        duration-300
+
+        ${
+          selectedCountry === country
+            ? "bg-yellow-400 text-slate-900"
+            : "bg-slate-800 text-white hover:bg-slate-700"
+        }
+      `}
+    >
+      {country}
+    </button>
+
+  ))}
+
+</div>
+
+    <div
+  className="
+    rounded-3xl
+    border
+    border-slate-700
+    bg-gradient-to-b
+    from-slate-900
+    to-slate-950
+    p-8
+  "
+>
+
+    </div>
+
+  </div>
+
+)
       </main>
 
       <PlayerModal

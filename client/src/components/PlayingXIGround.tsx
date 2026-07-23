@@ -48,6 +48,10 @@ function PlayingXIGround() {
           via-[#1d8c3c]
           to-[#156d2f]
           shadow-2xl
+
+          transition-all
+          duration-700
+          hover:scale-[1.01]
         "
       >
         <div
@@ -114,25 +118,32 @@ function PlayingXIGround() {
               ) : (
                 <div
                   className="
-                    flex
-                    h-24
-                    w-24
-                    items-center
-                    justify-center
+flex
+h-24
+w-24
+items-center
+justify-center
 
-                    rounded-2xl
+rounded-2xl
 
-                    border-2
-                    border-dashed
-                    border-white/30
+border-2
+border-dashed
+border-white/30
 
-                    bg-black/20
+bg-black/20
 
-                    text-xs
-                    font-bold
-                    tracking-widest
-                    text-white/50
-                  "
+text-xs
+font-bold
+tracking-widest
+text-white/50
+
+transition-all
+duration-300
+
+hover:border-yellow-400
+hover:text-yellow-300
+hover:bg-black/30
+"
                 >
                   EMPTY
                 </div>

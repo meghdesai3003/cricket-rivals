@@ -18,6 +18,7 @@ interface PlayingXIContextType {
   setCaptain: (id: number) => void;
   setViceCaptain: (id: number) => void;
   isTeamValid: () => boolean;
+  clearPlayingXI: () => void;
 }
 
 
@@ -109,17 +110,25 @@ function setViceCaptain(id: number) {
   setViceCaptainId(id);
 }
 
+function clearPlayingXI() {
+  setPlayingXI([]);
+  setCaptainId(null);
+  setViceCaptainId(null);
+}
+
   return (
     <PlayingXIContext.Provider
       value={{
         playingXI,
         addPlayer,
         removePlayer,
+        clearPlayingXI,
         captainId,
         viceCaptainId,
         setCaptain,
         setViceCaptain,
         isTeamValid,
+
       }}
     >
       {children}

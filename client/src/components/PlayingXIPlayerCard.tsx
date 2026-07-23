@@ -11,22 +11,29 @@ function PlayingXIPlayerCard({ player }: Props) {
   return (
     <div
       className="
-        relative
-        h-[210px]
-        w-[135px]
-        overflow-hidden
-        rounded-[28px]
-        border-[3px]
-        border-slate-700
-        bg-gradient-to-b
-        from-slate-900
-        via-slate-950
-        to-black
-        shadow-2xl
-        transition-all
-        duration-300
-        hover:scale-105
-      "
+relative
+h-[210px]
+w-[135px]
+overflow-hidden
+rounded-[28px]
+border-[3px]
+border-slate-700
+bg-gradient-to-b
+from-slate-900
+via-slate-950
+to-black
+
+shadow-2xl
+
+transition-all
+duration-300
+ease-out
+
+hover:-translate-y-2
+hover:scale-105
+hover:rotate-1
+hover:shadow-yellow-400/30
+"
     >
       {/* Overall */}
 

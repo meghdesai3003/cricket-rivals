@@ -5,11 +5,16 @@ import PlayingXIGround from "../components/PlayingXIGround";
 const usePlayingXI: () => {
   playingXI: Array<any>;
   isTeamValid: () => boolean;
+  clearPlayingXI: () => void;
 } =
-  (PlayingXIContext as any).usePlayingXI ?? (() => ({ playingXI: [], isTeamValid: () => false }));
+  (PlayingXIContext as any).usePlayingXI ?? (() => ({ playingXI: [], isTeamValid: () => false, clearPlayingXI: () => {} }));
 
 function PlayingXI() {
-  const { playingXI, isTeamValid } = usePlayingXI();
+  const {
+  playingXI,
+  isTeamValid,
+  clearPlayingXI,
+} = usePlayingXI();
 
   const averageOverall =
   playingXI.length > 0
@@ -52,6 +57,11 @@ const teamRating =
           from-slate-900
           to-slate-950
           p-10
+
+          hover:-translate-y-2
+          hover:border-yellow-400/40
+          transition-all
+          duration-300
         "
       >
 
@@ -99,6 +109,11 @@ const teamRating =
       to-slate-950
       p-6
       shadow-xl
+
+      hover:-translate-y-2
+      hover:border-yellow-400/40
+      transition-all
+      duration-300
     "
   >
     <p className="text-sm font-semibold uppercase tracking-widest text-slate-400">
@@ -125,6 +140,11 @@ const teamRating =
       to-slate-950
       p-6
       shadow-xl
+
+      hover:-translate-y-2
+      hover:border-yellow-400/40
+      transition-all
+      duration-300
     "
   >
     <p className="text-sm font-semibold uppercase tracking-widest text-slate-400">
@@ -182,7 +202,115 @@ const teamRating =
 
 </div>
 
-            <PlayingXIGround />
+            <div
+  className="
+    animate-fade-in
+    duration-700
+  "
+>
+  <PlayingXIGround />
+</div>
+
+            {/* Action Bar */}
+
+<div className="mt-10 grid gap-6 md:grid-cols-3">
+
+  {/* Save XI */}
+
+  <button
+  disabled={!isTeamValid()}
+  className={`
+    rounded-2xl
+    border
+    border-slate-700
+
+    py-5
+
+    text-lg
+    font-bold
+
+    transition-all
+    duration-300
+
+    active:scale-95
+    hover:-translate-y-1
+
+    ${
+      isTeamValid()
+        ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:scale-105"
+        : "cursor-not-allowed bg-slate-700 text-slate-400"
+    }
+  `}
+>
+   Save XI
+</button>
+
+  {/* Auto Pick */}
+
+  <button
+    className="
+      rounded-2xl
+      border
+      border-slate-700
+      bg-gradient-to-r
+      from-green-500
+      to-green-600
+
+      py-5
+
+      text-lg
+      font-bold
+      text-white
+
+      shadow-xl
+
+      transition-all
+      duration-300
+
+      hover:scale-105
+      hover:shadow-green-500/40
+
+      active:scale-95
+      hover:-translate-y-1
+    "
+  >
+     Auto Pick
+  </button>
+
+  {/* Clear XI */}
+
+  <button
+  onClick={clearPlayingXI}
+  className="
+    rounded-2xl
+    border
+    border-slate-700
+    bg-gradient-to-r
+    from-red-500
+    to-red-600
+
+    py-5
+
+    text-lg
+    font-bold
+    text-white
+
+    shadow-xl
+
+    transition-all
+    duration-300
+    
+    active:scale-95
+    hover:-translate-y-1
+
+    hover:scale-105
+    hover:shadow-red-500/40
+  "
+>
+   Clear XI
+</button>
+
+</div>
 
 <div className="mt-10 flex flex-col items-center">
 
@@ -197,6 +325,9 @@ const teamRating =
       transition-all
       duration-300
 
+      active:scale-95
+      hover:-translate-y-1
+
       ${
         isTeamValid()
           ? "bg-yellow-400 text-slate-900 hover:scale-105 hover:shadow-xl"
@@ -206,7 +337,7 @@ const teamRating =
   >
      Start Match
   </button>
-
+      
   {!isTeamValid() && (
     <p className="mt-4 text-sm text-red-400">
       Select all 11 players before starting a match.

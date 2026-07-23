@@ -48,42 +48,60 @@ function PlayingXIPlayer({ player }: Props) {
       `}
     >
       {captainId === player.id && (
-        <div
-          className="
-            absolute
-            -top-2
-            -left-2
-            rounded-full
-            bg-yellow-400
-            px-2
-            py-1
-            text-[10px]
-            font-black
-            text-slate-900
-          "
-        >
-          C
-        </div>
-      )}
+  <div
+    className="
+      absolute
+      -top-4
+      left-1/2
+      -translate-x-1/2
+
+      rounded-full
+      bg-gradient-to-r
+      from-yellow-300
+      to-yellow-500
+
+      px-4
+      py-1
+
+      text-[11px]
+      font-black
+      tracking-wide
+      text-slate-900
+
+      shadow-xl
+    "
+  >
+     CAPTAIN
+  </div>
+)}
 
       {viceCaptainId === player.id && (
-        <div
-          className="
-            absolute
-            -top-2
-            -right-2
-            rounded-full
-            bg-sky-400
-            px-2
-            py-1
-            text-[10px]
-            font-black
-            text-slate-900
-          "
-        >
-          VC
-        </div>
-      )}
+  <div
+    className="
+      absolute
+      top-8
+      left-1/2
+      -translate-x-1/2
+
+      rounded-full
+      bg-gradient-to-r
+      from-sky-300
+      to-sky-500
+
+      px-3
+      py-1
+
+      text-[10px]
+      font-black
+      tracking-wide
+      text-slate-900
+
+      shadow-lg
+    "
+  >
+    VC
+  </div>
+)}
 
       <p
         className={`text-center text-lg font-black ${overall}`}

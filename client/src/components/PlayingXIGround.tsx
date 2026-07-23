@@ -1,123 +1,152 @@
-import { usePlayingXI } from "../context/PlayingXIContext";
-import PlayingXIPlayer from "./PlayingXIPlayer";
 import { useState } from "react";
 import type { Player } from "../types/Player";
+import { usePlayingXI } from "../context/PlayingXIContext";
+import PlayingXIPlayer from "./PlayingXIPlayer";
 import PlayingXIPlayerModal from "./PlayingXIPlayerModal";
 
 function PlayingXIGround() {
   const { playingXI } = usePlayingXI();
+
   const [selectedPlayer, setSelectedPlayer] =
-  useState<Player | null>(null);
+    useState<Player | null>(null);
+
+  // Premium 11-player formation
   const positions = [
-  { top: "8%", left: "50%" },   // Opener 1
+    // Top
+    { top: "10%", left: "50%" },
 
-  { top: "22%", left: "28%" },  // Opener 2
-  { top: "22%", left: "72%" },  // Opener 3
+    // Second Row
+    { top: "25%", left: "28%" },
+    { top: "25%", left: "50%" },
+    { top: "25%", left: "72%" },
 
-  { top: "38%", left: "50%" },  // All-rounder
+    // Middle Row
+    { top: "45%", left: "18%" },
+    { top: "45%", left: "38%" },
+    { top: "45%", left: "62%" },
+    { top: "45%", left: "82%" },
 
-  { top: "56%", left: "18%" },  // Bowler
-  { top: "56%", left: "40%" },  // WK
-  { top: "56%", left: "62%" },  // Bowler
-  { top: "56%", left: "84%" },  // Bowler
-
-  { top: "76%", left: "30%" },  // Bowler
-  { top: "76%", left: "50%" },  // Bowler
-  { top: "76%", left: "70%" },  // Bowler
-];
+    // Bottom Row
+    { top: "68%", left: "30%" },
+    { top: "68%", left: "50%" },
+    { top: "68%", left: "70%" },
+  ];
 
   return (
-    <div
-      className="
-        relative
-        overflow-hidden
-        rounded-[40px]
-        border
-        border-green-700/40
-        bg-gradient-to-b
-        from-green-900
-        via-green-800
-        to-green-950
-        p-16
-        shadow-2xl
-      "
-    >
-      {/* Field */}
-
+    <>
       <div
         className="
           relative
-          mx-auto
-          flex
           h-[900px]
-          w-[700px]
-          items-center
-          justify-center
+          w-full
+          overflow-hidden
           rounded-full
-          border-[8px]
-          border-green-300/20
+          border
+          border-green-700/30
           bg-gradient-to-b
-          from-green-700
-          via-green-800
-          to-green-900
+          from-[#2ca84e]
+          via-[#1d8c3c]
+          to-[#156d2f]
+          shadow-2xl
         "
       >
-        {positions.map((position, index) => {
-  const player = playingXI[index];
+        <div
+  className="
+    absolute
+    inset-5
 
-  return (
-    <div
-      key={index}
-      className="absolute -translate-x-1/2 -translate-y-1/2"
-      style={{
-        top: position.top,
-        left: position.left,
-      }}
-    >
-      {player ? (
+    rounded-full
 
-        <div className="flex flex-col items-center">
-
-          <div
-  onClick={() => setSelectedPlayer(player)}
-  className="cursor-pointer"
->
-  <PlayingXIPlayer player={player} />
-</div>
-
-        </div>
-
-      ) : (
+    border-[6px]
+    border-white/25
+  "
+/>
+        {/* Pitch */}
 
         <div
           className="
-            flex
-            h-24
-            w-24
-            items-center
-            justify-center
-            rounded-full
-            border-2
-            border-dashed
-            border-white/40
-            text-3xl
-            text-white/40
+            absolute
+            left-1/2
+            top-1/2
+            h-[280px]
+            w-[100px]
+            -translate-x-1/2
+            -translate-y-1/2
+            rounded-xl
+            bg-[#d8c08c]
+            shadow-xl
           "
-        >
-          +
-        </div>
+        />
 
-      )}
-    </div>
-    
-  );
-})}
+        {/* Crease */}
+
+        <div className="absolute left-1/2 top-[36%] h-[2px] w-24 -translate-x-1/2 bg-white/70" />
+        <div className="absolute left-1/2 top-[64%] h-[2px] w-24 -translate-x-1/2 bg-white/70" />
+
+        {/* Players */}
+
+        {positions.map((position, index) => {
+          const player = playingXI[index];
+
+          return (
+            <div
+              key={index}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{
+                top: position.top,
+                left: position.left,
+              }}
+            >
+              {player ? (
+                <div
+                  onClick={() => setSelectedPlayer(player)}
+                  className="
+                    cursor-pointer
+                    transition-all
+                    duration-300
+                    hover:scale-105
+                  "
+                >
+                  <div className="scale-[0.90] origin-center">
+                    <PlayingXIPlayer player={player} />
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="
+                    flex
+                    h-24
+                    w-24
+                    items-center
+                    justify-center
+
+                    rounded-2xl
+
+                    border-2
+                    border-dashed
+                    border-white/30
+
+                    bg-black/20
+
+                    text-xs
+                    font-bold
+                    tracking-widest
+                    text-white/50
+                  "
+                >
+                  EMPTY
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
-<PlayingXIPlayerModal
-  player={selectedPlayer}
-  onClose={() => setSelectedPlayer(null)}
-/>
-    </div>
+
+      <PlayingXIPlayerModal
+        player={selectedPlayer}
+        onClose={() => setSelectedPlayer(null)}
+      />
+    </>
   );
 }
 

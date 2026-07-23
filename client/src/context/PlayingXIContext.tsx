@@ -17,7 +17,10 @@ interface PlayingXIContextType {
 
   setCaptain: (id: number) => void;
   setViceCaptain: (id: number) => void;
+  isTeamValid: () => boolean;
 }
+
+
 
 const PlayingXIContext =
   createContext<PlayingXIContextType | null>(null);
@@ -51,23 +54,45 @@ export function PlayingXIProvider({
     );
   }, [playingXI]);
 
+  const isTeamValid = () => {
+  return playingXI.length === 11;
+};
+
+ 
+
   function addPlayer(player: Player) {
-    setPlayingXI((prev) => {
-      if (prev.find((p) => p.id === player.id))
-        return prev;
+  setPlayingXI((prev) => {
 
-      if (prev.length >= 11)
-        return prev;
+    if (prev.some((p) => p.id === player.id)) {
+      alert("Player is already in your Playing XI.");
+      return prev;
+    }
 
-      return [...prev, player];
-    });
-  }
+    if (prev.length >= 11) {
+      alert("Playing XI already has 11 players.");
+      return prev;
+    }
+
+    return [...prev, player];
+
+  });
+}
 
   function removePlayer(id: number) {
-    setPlayingXI((prev) =>
-      prev.filter((p) => p.id !== id)
-    );
+
+  setPlayingXI((prev) =>
+    prev.filter((p) => p.id !== id)
+  );
+
+  if (captainId === id) {
+    setCaptainId(null);
   }
+
+  if (viceCaptainId === id) {
+    setViceCaptainId(null);
+  }
+
+}
   function setCaptain(id: number) {
   if (viceCaptainId === id) {
     setViceCaptainId(null);
@@ -87,17 +112,15 @@ function setViceCaptain(id: number) {
   return (
     <PlayingXIContext.Provider
       value={{
-  playingXI,
-
-  captainId,
-  viceCaptainId,
-
-  addPlayer,
-  removePlayer,
-
-  setCaptain,
-  setViceCaptain,
-}}
+        playingXI,
+        addPlayer,
+        removePlayer,
+        captainId,
+        viceCaptainId,
+        setCaptain,
+        setViceCaptain,
+        isTeamValid,
+      }}
     >
       {children}
     </PlayingXIContext.Provider>

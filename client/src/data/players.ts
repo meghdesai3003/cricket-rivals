@@ -102,7 +102,7 @@ export const players: Player[] = [
     name: "Travis Head",
     country: "Australia",
     role: "Batter",
-    batting: 91,
+    batting: 84,
     bowling: 35,
     fielding: 86,
     overall: 89,
@@ -133,4 +133,32 @@ export const players: Player[] = [
     rarity: "Standard",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrJRhaMx6mSOV1vxhvD-eqYl5nLrkaa67bN3l5qmaQCw&s=10",
   },
+
+  {
+    id: 12,
+    name: "Steve Smith",
+    country: "Australia",
+    role: "Batter",
+    batting: 88,
+    bowling: 20,
+    fielding: 75,
+    overall: 82,
+    rarity: "Elite",
+    image: "https://tse2.mm.bing.net/th/id/OIP.sRTr24P2wC-wstgJlxn6gQHaE8?r=0&pid=Api&P=0&h=180",
+  },
+
+  {
+    id: 12,
+    name: "Yashasvi Jaiswal",
+    country: "India",
+    role: "Batter",
+    batting: 84,
+    bowling: 20,
+    fielding: 75,
+    overall: 79,
+    rarity: "Elite",
+    image: "https://tse1.mm.bing.net/th/id/OIP.FTEp3BE3Nz6XU5B08lmcPAHaEK?r=0&pid=Api&P=0&h=180",
+  },
+
+  
 ];

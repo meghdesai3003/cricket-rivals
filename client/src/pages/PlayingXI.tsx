@@ -1,6 +1,8 @@
 import * as PlayingXIContext from "../context/PlayingXIContext";
 import PlayingXIGround from "../components/PlayingXIGround";
 
+import { useNavigate } from "react-router-dom";
+
 // If the context file doesn't export `usePlayingXI`, provide a safe fallback.
 const usePlayingXI: () => {
   playingXI: Array<any>;
@@ -10,11 +12,8 @@ const usePlayingXI: () => {
   (PlayingXIContext as any).usePlayingXI ?? (() => ({ playingXI: [], isTeamValid: () => false, clearPlayingXI: () => {} }));
 
 function PlayingXI() {
-  const {
-  playingXI,
-  isTeamValid,
-  clearPlayingXI,
-} = usePlayingXI();
+  const {playingXI,isTeamValid,clearPlayingXI,} = usePlayingXI();
+  const navigate = useNavigate();
 
   const averageOverall =
   playingXI.length > 0
@@ -316,6 +315,7 @@ const teamRating =
 
   <button
     disabled={!isTeamValid()}
+    onClick={() => navigate("/match-setup")}
     className={`
       rounded-2xl
       px-12

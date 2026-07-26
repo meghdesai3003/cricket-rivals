@@ -35,8 +35,12 @@ function CoinToss() {
   }
 
   function continueToMatch() {
-    navigate("/match");
-  }
+  navigate("/match", {
+    state: {
+      tossWinner: userWon ? "PLAYER" : "COMPUTER",
+    },
+  });
+}
 
   return (
     <main className="mx-auto flex min-h-screen w-11/12 max-w-6xl flex-col items-center justify-center py-12">
